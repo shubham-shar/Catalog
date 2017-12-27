@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<article class="row bg-dark">
+  <section class="col-md-12 text-white px-4 pt-2 pb-2">
+    <a class="h5 text-white" href="{{url_for('newRestaurant')}}">
+      <button class="btn btn-link text-white" type="button" name="button">
+        Create Restaurant
+      </button>
+    </a>
+  </section>
+</article>
+<article class="row bg-dark px-4">
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+
+  {% for message in messages %}
+  <p class="bg-primary text-white p-2">{{message}}</p>
+  {% endfor %}
+  {% endif %}
+  {% endwith %}
+    {% for restaurant in restaurants %}
+      <div class="col-md-12 mt-2">
+        <a class="h3 text-white" href = "{{url_for('restaurantMenu', restaurant_id = restaurant.id)}}">{{ restaurant.name }}</a>
+      </div>
+      <br>
+      <div>
+        <button type="button" name="button" class="btn btn-info mx-3">
+          <a class="text-white" href = "{{url_for('editRestaurant',restaurant_id = restaurant.id)}}">Edit</a>
+        </button>
+      </div>
+      <div>
+        <button type="button" name="button" class="btn btn-danger mx-2">
+          <a class="text-white" href = "{{url_for('deleteRestaurant',restaurant_id = restaurant.id)}}">Delete</a>
+        </button>
+      </div>
+      <br>
+      <br><br>
+    {% endfor %}
+</article>
+
+
+{% endblock %}
