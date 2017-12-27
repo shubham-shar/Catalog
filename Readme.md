@@ -27,9 +27,9 @@ To run this project you should have the following things on your computer.
 
 ## For seting the database and starting the server
 - Change the directory to the catalog folder.
-- Type `python database_setup.py`.
+- Type `python Database_file.py`.
 - Optional -- type `python lotsofmenu.py`.
-- Type `python finalproject.py` to start the server.
+- Type `python catalog.py` to start the server.
 
 That's it, now enjoy the webpage.
 
