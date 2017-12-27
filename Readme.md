@@ -20,7 +20,7 @@ To run this project you should have the following things on your computer.
 - Select `API's and Auth --> Credentials --> Create a new OAuth client ID` from the project menu
 - Select web application
 - Now, on consent scree, type product name and save
-- In Authorized javascript origins add: http://0.0.0.0:5000 http://localhost:5000
+- In Authorized javascript origins add: http://0.0.0.0:8000 http://localhost:8000
 - Click create client ID
 - Click download JSON and save to project folder as `client_secret.json`
 - In login.html replace the line `data-clientid=""` with your client id from the web application.
