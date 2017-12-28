@@ -5,9 +5,12 @@
     {% with messages = get_flashed_messages() %}
       {% if messages %}
 
+      <div class="bg-secondary p-2">
         {% for message in messages %}
-        <p class="bg-primary text-white p-2">{{message}}</p>
+        <span class="text-white">{{message}}</span>
+        <br class="col-md-12">
         {% endfor %}
+      </div>
       {% endif %}
     {% endwith %}
   </article>

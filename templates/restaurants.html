@@ -14,10 +14,12 @@
 <article class="row bg-dark px-4">
   {% with messages = get_flashed_messages() %}
   {% if messages %}
-
-  {% for message in messages %}
-  <p class="bg-primary text-white p-2">{{message}}</p>
-  {% endfor %}
+  <div class="bg-secondary p-2">
+    {% for message in messages %}
+    <span class="text-white">{{message}}</span>
+    <br class="col-md-12">
+    {% endfor %}
+  </div>
   {% endif %}
   {% endwith %}
     {% for restaurant in restaurants %}
@@ -26,14 +28,18 @@
       </div>
       <br>
       <div>
-        <button type="button" name="button" class="btn btn-info mx-3">
-          <a class="text-white" href = "{{url_for('editRestaurant',restaurant_id = restaurant.id)}}">Edit</a>
-        </button>
+        <a class="text-white" href = "{{url_for('editRestaurant',restaurant_id = restaurant.id)}}">
+          <button type="button" name="button" class="btn btn-info mx-3">
+            Edit
+          </button>
+        </a>
       </div>
       <div>
-        <button type="button" name="button" class="btn btn-danger mx-2">
-          <a class="text-white" href = "{{url_for('deleteRestaurant',restaurant_id = restaurant.id)}}">Delete</a>
-        </button>
+        <a class="text-white" href = "{{url_for('deleteRestaurant',restaurant_id = restaurant.id)}}">
+          <button type="button" name="button" class="btn btn-danger mx-2">
+            Delete
+          </button>
+        </a>
       </div>
       <br>
       <br><br>
