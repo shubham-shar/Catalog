@@ -20,16 +20,16 @@ To run this project you should have the following things on your computer.
 - Select `API's and Auth --> Credentials --> Create a new OAuth client ID` from the project menu
 - Select web application
 - Now, on consent scree, type product name and save
-- In Authorized javascript origins add: http://0.0.0.0:5000 http://localhost:5000
+- In Authorized javascript origins add: http://0.0.0.0:8000 http://localhost:8000
 - Click create client ID
 - Click download JSON and save to project folder as `client_secret.json`
 - In login.html replace the line `data-clientid=""` with your client id from the web application.
 
 ## For seting the database and starting the server
 - Change the directory to the catalog folder.
-- Type `python database_setup.py`.
+- Type `python Database_file.py`.
 - Optional -- type `python lotsofmenu.py`.
-- Type `python finalproject.py` to start the server.
+- Type `python catalog.py` to start the server.
 
 That's it, now enjoy the webpage.
 
