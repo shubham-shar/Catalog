@@ -4,6 +4,7 @@ app = Flask(__name__)
 from sqlalchemy import create_engine, asc
 from sqlalchemy.orm import sessionmaker
 from Database_file import Base, Restaurant, MenuItem, User
+from sqlalchemy.orm.exc import MultipleResultsFound
 
 from flask import session as login_session
 import random, string
@@ -31,7 +32,11 @@ def createUser(login_session):
                    'email'], picture=login_session['picture'])
     session.add(newUser)
     session.commit()
-    user = session.query(User).filter_by(email=login_session['email']).one()
+    try:
+        user = session.query(User).filter_by(email=login_session['email']).one()
+    except MultipleResultsFound:
+        user = session.query(User).filter_by(
+               email=login_session['email']).first()
     return user.id
 
 
@@ -48,12 +53,12 @@ def getUserID(email):
         return None
 
 
-@app.route('/login')
 def showLogin():
     state = ''.join(random.choice(string.ascii_uppercase + string.digits)
                     for x in xrange(32))
     login_session['state'] = state
-    return render_template('login.html', STATE=state)
+    print state
+    return state
 
 @app.route('/gconnect', methods=['POST'])
 def gconnect():
@@ -150,7 +155,7 @@ def gdisconnect():
     if access_token is None:
         flash('Current user not connected')
         return redirect(url_for('restaurants'))
-    print 'In gdisconnect access token is %s', access_token
+    print 'In gdisconnect access token is %s' % access_token
     print 'User name is: ',
     print login_session['username']
     url = 'https://accounts.google.com/o/oauth2/revoke?token=%s' % login_session['access_token']
@@ -216,10 +221,10 @@ def fbconnect():
     login_session['user_id'] = user_id
 
     output = ''
-    output += '<h1>Welcome,</h1><h4 class="text-capitalize"> '
+    output += '<h1>Welcome</h1><h4 class="text-capitalize"> '
     output += login_session['username']
     output += '!</h4>'
-    output += '<img class="img-responsive img-thumbnail" src="'
+    output += '<img class="img-responsive" src="'
     output += login_session['picture']
     output += ' "><br>'
     flash("Now logged in as %s" % login_session['username'])
@@ -259,12 +264,14 @@ def restaurantsJSON():
 @app.route('/')
 @app.route('/restaurants')
 def restaurants():
+    state = showLogin()
     restaurants = session.query(Restaurant).all()
     if 'username' not in login_session:
         return render_template('public-Restaurant.html',
-                                restaurants = restaurants)
+                                restaurants = restaurants, STATE = state)
     else:
-        return render_template('restaurants.html', restaurants = restaurants)
+        return render_template('restaurants.html', restaurants = restaurants,
+                                STATE = state)
 
 @app.route('/restaurant/new/', methods=['GET', 'POST'])
 def newRestaurant():
@@ -322,6 +329,7 @@ def deleteRestaurant(restaurant_id):
 @app.route('/restaurant/<int:restaurant_id>/')
 @app.route('/restaurant/<int:restaurant_id>/menu/')
 def restaurantMenu(restaurant_id):
+    state = showLogin()
     restaurant = session.query(Restaurant).filter_by(id = restaurant_id).one()
     creator = getUserInfo(restaurant.user_id)
     items = session.query(MenuItem).filter_by(
@@ -329,10 +337,12 @@ def restaurantMenu(restaurant_id):
     if 'username' not in login_session or \
         creator.id != login_session['user_id']:
         return render_template('public-Menu.html', items=items,
-                                restaurant=restaurant, creator=creator)
+                                restaurant=restaurant, creator=creator,
+                                STATE=state)
     else:
         return render_template('menu.html', items=items,
-                                restaurant=restaurant, creator=creator)
+                                restaurant=restaurant, creator=creator,
+                                STATE=state)
 
 @app.route('/restaurant/<int:restaurant_id>/menu/new/', methods=['GET', 'POST'])
 def newMenuItem(restaurant_id):

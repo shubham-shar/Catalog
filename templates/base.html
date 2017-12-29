@@ -3,13 +3,9 @@
   <head>
     <meta charset="utf-8">
     <title>Catalog</title>
-    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='master.css') }}">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+    {% include "header.html" %}
   </head>
-  <body>
+  <body class="bg-dark">
     <div class="fluid-container">
       <header class="row bg-success">
         <div class="col-md-10 text-center">
@@ -17,11 +13,10 @@
         </div>
         <div class="col-md-2 text-right pt-2 pr-5">
           {%if 'username' not in session %}
-          <a href="{{url_for('showLogin')}}">
-            <button class="btn bg-faded text-black" type="button" name="button">
+            <button class="btn bg-faded text-black" type="button" name="button" data-toggle="modal" data-target="#myModal">
               Click Here to Login
             </button>
-          </a>
+            {% include "login-base.html" %}
 			    {% else %}
           <a href="{{url_for('disconnect')}}">
             <button class="btn bg-faded text-black" type="button" name="button">
@@ -29,6 +24,7 @@
             </button>
           </a>
 			    {% endif %}
+
         </div>
       </header>
       {% block content %}

@@ -5,13 +5,13 @@
 <article class="row bg-dark">
   <section class="col-md-12 text-white px-4 pt-2 pb-2">
     <a class="h5 text-white" href="{{url_for('newRestaurant')}}">
-      <button class="btn btn-link text-white" type="button" name="button">
+      <button class="btn btn-primary text-white" type="button" name="button">
         Create Restaurant
       </button>
     </a>
   </section>
 </article>
-<article class="row bg-dark px-4">
+<article class="row bg-dark px-4 pb-2">
   {% with messages = get_flashed_messages() %}
   {% if messages %}
   <div class="bg-secondary p-2">
