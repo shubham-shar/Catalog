@@ -36,7 +36,7 @@
             $('.modal-title').text("Login Successful");
             $('#result').html(result + '</br>Redirecting...')
             setTimeout(function() {
-              window.location.href = "/restaurants";
+              window.location.href = "/" + page;
             }, 5000);
           } else {
             $('#result').html('Failed to make a server-side call. Check your configuration and console.');

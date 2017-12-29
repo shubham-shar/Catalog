@@ -16,7 +16,7 @@ function signInCallback(authResult) {
           $('.modal-title').text("Login Successful");
           $('#result').html(result + '</br>Redirecting...')
          setTimeout(function() {
-          window.location.href = "/restaurants";
+          window.location.href = "/"+page;
         }, 5000);
         } else if (authResult['error']) {
         console.log('There was an error: ' + authResult['error']);

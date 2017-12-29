@@ -265,13 +265,15 @@ def restaurantsJSON():
 @app.route('/restaurants')
 def restaurants():
     state = showLogin()
+    page = 'restaurants'
     restaurants = session.query(Restaurant).all()
     if 'username' not in login_session:
         return render_template('public-Restaurant.html',
-                                restaurants = restaurants, STATE = state)
+                                restaurants = restaurants, STATE = state,
+                                page=page)
     else:
         return render_template('restaurants.html', restaurants = restaurants,
-                                STATE = state)
+                                STATE = state, page=page)
 
 @app.route('/restaurant/new/', methods=['GET', 'POST'])
 def newRestaurant():
@@ -330,6 +332,7 @@ def deleteRestaurant(restaurant_id):
 @app.route('/restaurant/<int:restaurant_id>/menu/')
 def restaurantMenu(restaurant_id):
     state = showLogin()
+    page = 'restaurant/' + str(restaurant_id) + '/menu/'
     restaurant = session.query(Restaurant).filter_by(id = restaurant_id).one()
     creator = getUserInfo(restaurant.user_id)
     items = session.query(MenuItem).filter_by(
@@ -338,11 +341,11 @@ def restaurantMenu(restaurant_id):
         creator.id != login_session['user_id']:
         return render_template('public-Menu.html', items=items,
                                 restaurant=restaurant, creator=creator,
-                                STATE=state)
+                                STATE=state, page=page)
     else:
         return render_template('menu.html', items=items,
                                 restaurant=restaurant, creator=creator,
-                                STATE=state)
+                                STATE=state, page=page)
 
 @app.route('/restaurant/<int:restaurant_id>/menu/new/', methods=['GET', 'POST'])
 def newMenuItem(restaurant_id):
