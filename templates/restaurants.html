@@ -11,39 +11,46 @@
     </a>
   </section>
 </article>
+<article>
+  <div class="col-md-4">
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+      <div class="bg-secondary p-2">
+        {% for message in messages %}
+        <span class="text-white">{{message}}</span>
+        <br class="col-md-12">
+        {% endfor %}
+      </div>
+      {% endif %}
+    {% endwith %}
+  </div>
+</article>
 <article class="row bg-dark px-4 pb-2">
-  {% with messages = get_flashed_messages() %}
-  {% if messages %}
-  <div class="bg-secondary p-2">
-    {% for message in messages %}
-    <span class="text-white">{{message}}</span>
-    <br class="col-md-12">
+  <div class="card-columns">
+    {% for restaurant in restaurants %}
+    <div class="card border-light bg-dark m-1">
+      <div class="card-body">
+        <div class="card-title">
+          <div class="col-md-12 mt-2">
+            <a class="h3 text-white" href = "{{url_for('restaurantMenu', restaurant_id = restaurant.id)}}">{{ restaurant.name }}</a>
+          </div>
+        </div>
+        <div class="card-text">
+          <a class="text-white" href = "{{url_for('editRestaurant',restaurant_id = restaurant.id)}}">
+            <button type="button" name="button" class="btn btn-info mx-3">
+              Edit
+            </button>
+          </a>
+          <a class="text-white" href = "{{url_for('deleteRestaurant',restaurant_id = restaurant.id)}}">
+            <button type="button" name="button" class="btn btn-danger mx-2">
+              Delete
+            </button>
+          </a>
+        </div>
+      </div>
+    </div>
     {% endfor %}
   </div>
-  {% endif %}
-  {% endwith %}
-    {% for restaurant in restaurants %}
-      <div class="col-md-12 mt-2">
-        <a class="h3 text-white" href = "{{url_for('restaurantMenu', restaurant_id = restaurant.id)}}">{{ restaurant.name }}</a>
-      </div>
-      <br>
-      <div>
-        <a class="text-white" href = "{{url_for('editRestaurant',restaurant_id = restaurant.id)}}">
-          <button type="button" name="button" class="btn btn-info mx-3">
-            Edit
-          </button>
-        </a>
-      </div>
-      <div>
-        <a class="text-white" href = "{{url_for('deleteRestaurant',restaurant_id = restaurant.id)}}">
-          <button type="button" name="button" class="btn btn-danger mx-2">
-            Delete
-          </button>
-        </a>
-      </div>
-      <br>
-      <br><br>
-    {% endfor %}
 </article>
 
 

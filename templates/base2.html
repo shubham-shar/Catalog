@@ -8,8 +8,15 @@
   <body class="bg-dark">
     <div class="fluid-container bg-dark">
       <header class="row bg-success">
-        <div class="col-md-10 text-center">
-          <h1 class="text-white">{{restaurant.name}}'s Menu</h1>
+        <div class="col-md-2 pt-2 pl-5">
+          <a href="{{url_for('restaurants')}}">
+            <button class="btn bg-faded text-black" type="button" name="button">
+              Home
+            </button>
+          </a>
+        </div>
+        <div class="col-md-8 pt-2 text-center">
+          <h2 class="text-white">{{restaurant.name}}'s Menu</h2>
         </div>
         <div class="col-md-2 text-right pt-2 pr-5">
           {%if 'username' not in session %}

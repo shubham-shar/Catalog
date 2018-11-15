@@ -376,6 +376,7 @@ def editMenuItem(restaurant_id, menu_id):
     if 'username' not in login_session:
         return redirect('/login')
     editedItem = session.query(MenuItem).filter_by(id=menu_id).one()
+    restaurant = session.query(Restaurant).filter_by(id = restaurant_id).one()
     if login_session['user_id'] != restaurant.user_id:
         flash("You are not authorized to edit menu items of this restaurant.")
         flash("Please create your own restaurant in order to edit items.")

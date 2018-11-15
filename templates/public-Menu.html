@@ -1,94 +1,168 @@
 {% extends "base2.html" %}
   {% block content %}
-    <article class="row bg-dark px-4">
-      {% with messages = get_flashed_messages() %}
-      {% if messages %}
-
-      <div class="bg-secondary p-2">
-        {% for message in messages %}
-        <span class="text-white">{{message}}</span>
-        <br class="col-md-12">
-        {% endfor %}
+    <article class="row my-2 ml-2">
+      <div class="col-md-4">
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+          <div class="bg-secondary p-2">
+            {% for message in messages %}
+            <span class="text-white">{{message}}</span>
+            <br class="col-md-12">
+            {% endfor %}
+          </div>
+          {% endif %}
+        {% endwith %}
       </div>
-      {% endif %}
-      {% endwith %}
-         {% if items !=[] %}
-         <div class="col-md-12 mt-2">
-           <h2 class="text-white"><u>Appetizer</u></h2>
-         </div>
-           {% for i in items %}
-             {% if i.course == 'Appetizer' %}
-             <div class="col-md-12 mt-2">
-               <h4 class="text-white">{{i.name}}</h4>
-             </div>
-             <div class="col-md-12">
-               <p class="text-white">{{i.description}}</p>
-             </div>
-             <div class="col-md-12">
-               <p class="text-white">Price: ${{i.price}}</p>
-             </div>
-             <hr>
-             <br><br>
-             {% endif %}
-           {% endfor %}
+    </article>
+    <article class="row bg-dark px-4">
+     {% if items !=[] %}
+      <div class="card-deck mb-3 col-md-12">
+        {% if items|selectattr('course', 'equalto', 'Appetizer')|list|length > 0 %}
+      <div class="card bg-dark border-light" data-toggle="modal" data-target="#Appetizer">
+        <div class="card-body">
+          <h3 class="text-white card-title">Appetizer</h3>
+        </div>
+      </div>
+       <div class="modal fade" id="Appetizer" tabindex="-1" role="dialog" aria-labelledby="AppetizerLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="AppetizerLabel">Appetizer</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              {% for i in items %}
+               {% if i.course == 'Appetizer' %}
+               <div class="col-md-12 mt-2">
+                 <h4 class="text-dark">{{i.name}}</h4>
+               </div>
+               <div class="col-md-12">
+                 <p class="text-dark">{{i.description}}</p>
+               </div>
+               <div class="col-md-12">
+                 <p class="text-dark">Price: {{i.price}}</p>
+               </div>
+               <hr>
+               {% endif %}
+             {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+        {% endif %}
+      {% if items|selectattr('course', 'equalto', 'Entree')|list|length > 0 %}
+       
+      <div class="card bg-dark border-light" data-toggle="modal" data-target="#Entree">
+        <div class="card-body">
+          <h3 class="text-white card-title">Entree</h3>
+        </div>
+      </div>
+       <div class="modal fade" id="Entree" tabindex="-1" role="dialog" aria-labelledby="EntreeLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="EntreeLabel">Entree</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              {% for i in items %}
+               {% if i.course == 'Entree' %}
+               <div class="col-md-12 mt-2">
+                 <h4 class="text-dark">{{i.name}}</h4>
+               </div>
+               <div class="col-md-12">
+                 <p class="text-dark">{{i.description}}</p>
+               </div>
+               <div class="col-md-12">
+                 <p class="text-dark">Price: {{i.price}}</p>
+               </div>
+               <hr>
+               {% endif %}
+             {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+       {% endif %}
+      </div>
+       
+      <div class="card-deck col-md-12">
+        {% if items|selectattr('course', 'equalto', 'Beverage')|list|length > 0 %}
+      <div class="card bg-dark border-light" data-toggle="modal" data-target="#Beverage">
+        <div class="card-body">
+          <h3 class="text-white card-title">Beverage</h3>
+        </div>
+      </div>
+       <div class="modal fade" id="Beverage" tabindex="-1" role="dialog" aria-labelledby="BeverageLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="BeverageLabel">Beverage</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              {% for i in items %}
+               {% if i.course == 'Beverage' %}
+               <div class="col-md-12 mt-2">
+                 <h4 class="text-dark">{{i.name}}</h4>
+               </div>
+               <div class="col-md-12">
+                 <p class="text-dark">{{i.description}}</p>
+               </div>
+               <div class="col-md-12">
+                 <p class="text-dark">Price: {{i.price}}</p>
+               </div>
+               <hr>
+               {% endif %}
+             {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+       {% endif %}
 
-           <div class="col-md-12 mt-2">
-             <h2 class="text-white"><u>Entree</u></h2>
-           </div>
-           {% for i in items %}
-             {% if i.course == 'Entree' %}
-             <div class="col-md-12 mt-2">
-               <h4 class="text-white">{{i.name}}</h4>
-             </div>
-             <div class="col-md-12">
-               <p class="text-white">{{i.description}}</p>
-             </div>
-             <div class="col-md-12">
-               <p class="text-white">Price: ${{i.price}}</p>
-             </div>
-             <hr>
-             <br><br>
-             {% endif %}
-           {% endfor %}
-
-           <div class="col-md-12 mt-2">
-             <h2 class="text-white"><u>Beverage</u></h2>
-           </div>
-           {% for i in items %}
-             {% if i.course == 'Beverage' %}
-             <div class="col-md-12 mt-2">
-               <h4 class="text-white">{{i.name}}</h4>
-             </div>
-             <div class="col-md-12">
-               <p class="text-white">{{i.description}}</p>
-             </div>
-             <div class="col-md-12">
-               <p class="text-white">Price: ${{i.price}}</p>
-             </div>
-             <hr>
-             <br><br>
-             {% endif %}
-           {% endfor %}
-
-           <div class="col-md-12 mt-2">
-             <h2 class="text-white"><u>Dessert</u></h2>
-           </div>
-           {% for i in items %}
-             {% if i.course == 'Dessert' %}
-             <div class="col-md-12 mt-2">
-               <h4 class="text-white">{{i.name}}</h4>
-             </div>
-             <div class="col-md-12">
-               <p class="text-white">{{i.description}}</p>
-             </div>
-             <div class="col-md-12">
-               <p class="text-white">Price: ${{i.price}}</p>
-             </div>
-             <hr>
-             <br><br>
-             {% endif %}
-           {% endfor %}
-
-         {% endif %}
+      {% if items|selectattr('course', 'equalto', 'Dessert')|list|length > 0 %}
+      <div class="card bg-dark border-light" data-toggle="modal" data-target="#Dessert">
+        <div class="card-body">
+          <h3 class="text-white card-title">Dessert</h3>
+        </div>
+      </div>
+       <div class="modal fade" id="Dessert" tabindex="-1" role="dialog" aria-labelledby="DessertLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="DessertLabel">Dessert</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              {% for i in items %}
+               {% if i.course == 'Dessert' %}
+               <div class="col-md-12 mt-2">
+                 <h4 class="text-dark">{{i.name}}</h4>
+               </div>
+               <div class="col-md-12">
+                 <p class="text-dark">{{i.description}}</p>
+               </div>
+               <div class="col-md-12">
+                 <p class="text-dark">Price: {{i.price}}</p>
+               </div>
+               <hr>
+               {% endif %}
+             {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+       {% endif %}
+      </div>
+     {% endif %}
     </article>
   {% endblock %}

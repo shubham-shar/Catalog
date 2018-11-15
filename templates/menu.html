@@ -1,140 +1,212 @@
 {% extends "base2.html" %}
   {% block content %}
   <article class="row bg-dark">
-    <section class="col-md-12 text-white px-4 pt-2 pb-2">
+    <section class="col-md-12 text-white pr-4 pl-2 pt-2 pb-2">
       <button class="btn btn-link text-white" type="button" name="button">
-        <a class="h5 text-white" href="{{url_for('newMenuItem', restaurant_id = restaurant.id)}}">Create an Item</a>
+        <a class="h5 text-white" href="{{url_for('newMenuItem', restaurant_id = restaurant.id)}}">
+          <button class="btn btn-primary text-white" type="button" name="button">
+            Create a Menu Item
+          </button>
+        </a>
       </button>
     </section>
   </article>
-  <article class="row bg-dark px-4">
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    <div class="bg-secondary p-2">
-      {% for message in messages %}
-      <span class="text-white">{{message}}</span>
-      <br class="col-md-12">
-      {% endfor %}
+  <article class="row my-2 ml-2">
+    <div class="col-md-4">
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="bg-secondary p-2">
+          {% for message in messages %}
+          <span class="text-white">{{message}}</span>
+          <br class="col-md-12">
+          {% endfor %}
+        </div>
+        {% endif %}
+      {% endwith %}
     </div>
-    {% endif %}
-    {% endwith %}
+  </article>
+  <article class="row bg-dark px-4">
        {% if items !=[] %}
-       <div class="col-md-12 mt-2">
-         <h2 class="text-white"><u>Appetizer</u></h2>
+       <div class="card-deck mb-3 col-md-12">
+        {% if items|selectattr('course', 'equalto', 'Appetizer')|list|length > 0 %}
+       <div class="card bg-dark border-light" data-toggle="modal" data-target="#Appetizer">
+        <div class="card-body">
+          <h3 class="text-white card-title">Appetizer</h3>
+        </div>
+      </div>
+       <div class="modal fade" id="Appetizer" tabindex="-1" role="dialog" aria-labelledby="AppetizerModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Appetizer</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                {% for i in items %}
+                 {% if i.course == 'Appetizer' %}
+                 <div class="col-md-12 mt-2">
+                   <h4 class="text-dark">{{i.name}}</h4>
+                 </div>
+                 <div class="col-md-12">
+                   <p class="text-dark">{{i.description}}</p>
+                 </div>
+                 <div class="col-md-12">
+                   <p class="text-dark">Price: {{i.price}}</p>
+                 </div>
+                 <div>
+                   <button type="button" name="button" class="btn btn-info mx-3">
+                     <a class="text-white" href = "{{url_for('editMenuItem', restaurant_id = restaurant.id, menu_id=i.id ) }}">Edit</a>
+                   </button>
+                   <button type="button" name="button" class="btn btn-danger mx-2">
+                     <a class="text-white" href = "{{url_for('deleteMenuItem', restaurant_id = restaurant.id, menu_id=i.id ) }}">Delete</a>
+                   </button>
+                 </div>
+                 <hr>
+                 {% endif %}
+               {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+         {% endif %}
+
+         {% if items|selectattr('course', 'equalto', 'Entree')|list|length > 0 %}
+          <div class="card bg-dark border-light" data-toggle="modal" data-target="#Entree">
+            <div class="card-body">
+              <h3 class="text-white card-title">Entree</h3>
+            </div>
+          </div>
+          <div class="modal fade" id="Entree" tabindex="-1" role="dialog" aria-labelledby="EntreeModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Entree</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  {% for i in items %}
+                   {% if i.course == 'Entree' %}
+                   <div class="col-md-12 mt-2">
+                     <h4 class="text-dark">{{i.name}}</h4>
+                   </div>
+                   <div class="col-md-12">
+                     <p class="text-dark">{{i.description}}</p>
+                   </div>
+                   <div class="col-md-12">
+                     <p class="text-dark">Price: {{i.price}}</p>
+                   </div>
+                   <div>
+                     <button type="button" name="button" class="btn btn-info mx-3">
+                       <a class="text-white" href = "{{url_for('editMenuItem', restaurant_id = restaurant.id, menu_id=i.id ) }}">Edit</a>
+                     </button>
+                     <button type="button" name="button" class="btn btn-danger mx-2">
+                       <a class="text-white" href = "{{url_for('deleteMenuItem', restaurant_id = restaurant.id, menu_id=i.id ) }}">Delete</a>
+                     </button>
+                   </div>
+                   <hr>
+                   {% endif %}
+                 {% endfor %}
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+ 
        </div>
-         {% for i in items %}
-           {% if i.course == 'Appetizer' %}
-           <div class="col-md-12 mt-2">
-             <h4 class="text-white">{{i.name}}</h4>
-           </div>
-           <div class="col-md-12">
-             <p class="text-white">{{i.description}}</p>
-           </div>
-           <div class="col-md-12">
-             <p class="text-white">Price: ${{i.price}}</p>
-           </div>
-           <br>
-           <div>
-             <button type="button" name="button" class="btn btn-info mx-3">
-               <a class="text-white" href = "{{url_for('editMenuItem', restaurant_id = restaurant.id, menu_id=i.id ) }}">Edit</a>
-             </button>
-           </div>
-           <div>
-             <button type="button" name="button" class="btn btn-danger mx-2">
-               <a class="text-white" href = "{{url_for('deleteMenuItem', restaurant_id = restaurant.id, menu_id=i.id ) }}">Delete</a>
-             </button>
-           </div>
-           <br><br>
+       
+        <div class="card-deck col-md-12">
+          {% if items|selectattr('course', 'equalto', 'Beverage')|list|length > 0 %}
+            <div class="card bg-dark border-light" data-toggle="modal" data-target="#Beverage">
+              <div class="card-body">
+                <h3 class="text-white card-title">Beverage</h3>
+              </div>
+            </div>
+           <div class="modal fade" id="Beverage" tabindex="-1" role="dialog" aria-labelledby="BeverageLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                 <div class="modal-header">
+                  <h5 class="modal-title" id="BeverageModalLabel">Beverage</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                  </div>
+                  <div class="modal-body">
+                    {% for i in items %}
+                     {% if i.course == 'Beverage' %}
+                     <div class="col-md-12 mt-2">
+                       <h4 class="text-dark">{{i.name}}</h4>
+                     </div>
+                     <div class="col-md-12">
+                       <p class="text-dark">{{i.description}}</p>
+                     </div>
+                     <div class="col-md-12">
+                       <p class="text-dark">Price: {{i.price}}</p>
+                     </div>
+                     <div>
+                       <button type="button" name="button" class="btn btn-info mx-3">
+                         <a class="text-white" href = "{{url_for('editMenuItem', restaurant_id = restaurant.id, menu_id=i.id ) }}">Edit</a>
+                       </button>
+                       <button type="button" name="button" class="btn btn-danger mx-2">
+                         <a class="text-white" href = "{{url_for('deleteMenuItem', restaurant_id = restaurant.id, menu_id=i.id ) }}">Delete</a>
+                       </button>
+                     </div>
+                     <hr>
+                     {% endif %}
+                   {% endfor %}
+                  </div>
+              </div>
+            </div>
+          </div>
            {% endif %}
-         {% endfor %}
 
-         <div class="col-md-12 mt-2">
-           <h2 class="text-white"><u>Entree</u></h2>
-         </div>
-         {% for i in items %}
-           {% if i.course == 'Entree' %}
-           <div class="col-md-12 mt-2">
-             <h4 class="text-white">{{i.name}}</h4>
-           </div>
-           <div class="col-md-12">
-             <p class="text-white">{{i.description}}</p>
-           </div>
-           <div class="col-md-12">
-             <p class="text-white">Price: ${{i.price}}</p>
-           </div>
-           <br>
-           <div>
-             <button type="button" name="button" class="btn btn-info mx-3">
-               <a class="text-white" href = "{{url_for('editMenuItem', restaurant_id = restaurant.id, menu_id=i.id ) }}">Edit</a>
-             </button>
-           </div>
-           <div>
-             <button type="button" name="button" class="btn btn-danger mx-2">
-               <a class="text-white" href = "{{url_for('deleteMenuItem', restaurant_id = restaurant.id, menu_id=i.id ) }}">Delete</a>
-             </button>
-           </div>
-           <br><br>
-           {% endif %}
-         {% endfor %}
-
-         <div class="col-md-12 mt-2">
-           <h2 class="text-white"><u>Beverage</u></h2>
-         </div>
-         {% for i in items %}
-           {% if i.course == 'Beverage' %}
-           <div class="col-md-12 mt-2">
-             <h4 class="text-white">{{i.name}}</h4>
-           </div>
-           <div class="col-md-12">
-             <p class="text-white">{{i.description}}</p>
-           </div>
-           <div class="col-md-12">
-             <p class="text-white">Price: ${{i.price}}</p>
-           </div>
-           <br>
-           <div>
-             <button type="button" name="button" class="btn btn-info mx-3">
-               <a class="text-white" href = "{{url_for('editMenuItem', restaurant_id = restaurant.id, menu_id=i.id ) }}">Edit</a>
-             </button>
-           </div>
-           <div>
-             <button type="button" name="button" class="btn btn-danger mx-2">
-               <a class="text-white" href = "{{url_for('deleteMenuItem', restaurant_id = restaurant.id, menu_id=i.id ) }}">Delete</a>
-             </button>
-           </div>
-           <br><br>
-           {% endif %}
-         {% endfor %}
-
-         <div class="col-md-12 mt-2">
-           <h2 class="text-white"><u>Dessert</u></h2>
-         </div>
-         {% for i in items %}
-           {% if i.course == 'Dessert' %}
-           <div class="col-md-12 mt-2">
-             <h4 class="text-white">{{i.name}}</h4>
-           </div>
-           <div class="col-md-12">
-             <p class="text-white">{{i.description}}</p>
-           </div>
-           <div class="col-md-12">
-             <p class="text-white">Price: ${{i.price}}</p>
-           </div>
-           <br>
-           <div>
-             <button type="button" name="button" class="btn btn-info mx-3">
-               <a class="text-white" href = "{{url_for('editMenuItem', restaurant_id = restaurant.id, menu_id=i.id ) }}">Edit</a>
-             </button>
-           </div>
-           <div>
-             <button type="button" name="button" class="btn btn-danger mx-2">
-               <a class="text-white" href = "{{url_for('deleteMenuItem', restaurant_id = restaurant.id, menu_id=i.id ) }}">Delete</a>
-             </button>
-           </div>
-           <br><br>
-           {% endif %}
-         {% endfor %}
-
+           {% if items|selectattr('course', 'equalto', 'Dessert')|list|length > 0 %}
+            <div class="card bg-dark border-light" data-toggle="modal" data-target="#Dessert">
+              <div class="card-body">
+                <h3 class="text-white card-title">Dessert</h3>
+              </div>
+            </div>
+           <div class="modal fade" id="Dessert" tabindex="-1" role="dialog" aria-labelledby="DessertLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="Dessert">Dessert</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  {% for i in items %}
+                   {% if i.course == 'Dessert' %}
+                   <div class="col-md-12 mt-2">
+                     <h4 class="text-dark">{{i.name}}</h4>
+                   </div>
+                   <div class="col-md-12">
+                     <p class="text-dark">{{i.description}}</p>
+                   </div>
+                   <div class="col-md-12">
+                     <p class="text-dark">Price: {{i.price}}</p>
+                   </div>
+                   <div>
+                     <button type="button" name="button" class="btn btn-info mx-3">
+                       <a class="text-white" href = "{{url_for('editMenuItem', restaurant_id = restaurant.id, menu_id=i.id ) }}">Edit</a>
+                     </button>
+                     <button type="button" name="button" class="btn btn-danger mx-2">
+                       <a class="text-white" href = "{{url_for('deleteMenuItem', restaurant_id = restaurant.id, menu_id=i.id ) }}">Delete</a>
+                     </button>
+                   </div>
+                   <hr>
+                   {% endif %}
+                 {% endfor %}
+                </div>
+              </div>
+            </div>
+          </div>
+         {% endif %}
+        </div>
        {% endif %}
   </article>
   {% endblock %}
